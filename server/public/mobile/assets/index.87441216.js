@@ -1,0 +1,1 @@
+import{aH as t}from"./index-53bd83dd.js";function a(a){return t.get({url:"/digitalhuman.Agreement/getConfig",data:a},{isAuth:!0})}function e(a){return t.post({url:"/digitalhuman.Cdkey/exchange",data:a},{isAuth:!0})}export{e,a as g};
