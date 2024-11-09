@@ -8,3 +8,7 @@ export function getContent(data : any) {
 export function exchange(data : any) {
 	return request.post({ url: '/digitalhuman.Cdkey/exchange', data: data },{isAuth:true})
 }
+
+export function getConfig() {
+	return request.get({ url: '/digitalhuman.Config/getConfig'},{isAuth:true})
+}

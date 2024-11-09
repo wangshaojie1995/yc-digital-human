@@ -1,6 +1,6 @@
 <template>
-	<view class="text-white">
-		<view class="mb-tab">
+	<view class=" y-page ">
+		<view class="mb-tab text-white">
 			<view class="flex flex-x-space-between flex-y-center p-20">
 				<text>我的作品</text>
 				<view class="block px-12 py-4 fs-13 bg-purple round-30 " @click="toAdd">去创作</view>
@@ -244,7 +244,6 @@
 <style lang='scss'>
 	@import '@/digitalhuman/static/iconfont.css';
 
-	@import '@/digitalhuman/static/yy.scss';
 
 	page {
 		background-color: #000;

@@ -18,6 +18,18 @@
                     </div>
                 </el-form-item>
 
+
+
+                <el-form-item label="壹定开发平台服务" v-if="formData.type == 'yiding'">
+                    <div>
+                        <el-radio-group v-model="formData.channel">
+                            <el-radio :value="1">免费</el-radio>
+                            <el-radio :value="2">付费</el-radio>
+                            <el-radio :value="3">PRO</el-radio>
+                        </el-radio-group>
+                    </div>
+                </el-form-item>
+
                 <el-form-item label="合成音频使用平台">
                     <div>
                         <el-radio-group v-model="formData.voice_type">
@@ -87,7 +99,15 @@ import { getConfig, setConfig } from '@/api/digitalhuman/three'
 
 
 const formData = ref({
-    token: ''
+    token: '',
+    channel: 1,
+    voice_type: 'yiding',
+    type: 'yiding',
+    scene_points: 0,
+    video_points: 0,
+    voice_points: 0,
+    appid: '',
+    app_secret: '',
 })
 const formRef = ref<FormInstance>()
 

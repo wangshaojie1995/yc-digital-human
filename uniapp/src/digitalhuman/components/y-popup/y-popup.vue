@@ -63,5 +63,4 @@
 
 <style lang="scss">
 	@import '@/digitalhuman/static/yy.scss';
-	@import '@/digitalhuman/static/iconfont.css';
 </style>

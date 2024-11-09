@@ -1,6 +1,6 @@
 <template>
-	<view class="text-white">
-		<view class="mb-tab">
+	<view class="y-page">
+		<view class="mb-tab text-white">
 			<view class="overflow-hidden  pt-4 px-8 ">
 				<view class="flex overflow-x-scroll w-p-100 flex-x-space-around" style="scrollbar-height: none;">
 					<view v-for="(item,index) in tabsList" :key='index'>
@@ -225,8 +225,6 @@
 
 <style lang='scss'>
 	@import '@/digitalhuman/static/iconfont.css';
-
-	@import '@/digitalhuman/static/yy.scss';
 
 	page {
 		background-color: #000;
