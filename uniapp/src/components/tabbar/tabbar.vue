@@ -4,6 +4,8 @@
         v-model="current"
         v-bind="tabbarStyle"
         :list="tabbarList"
+		:borderTop='false'
+		:border="false"
 		bgColor="#000"
         @change="handleChange"
         :hide-tab-bar="true"

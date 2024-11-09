@@ -11,6 +11,9 @@
                         <el-radio-group v-model="formData.type">
                             <el-radio value="yiding">壹定</el-radio>
                             <el-radio value="guiji">硅基</el-radio>
+                            <el-radio value="feiying" disabled>飞影</el-radio>
+                            <el-radio value="shanjian" disabled>闪剪</el-radio>
+                            <el-radio value="feitian" disabled>飞天</el-radio>
                         </el-radio-group>
                     </div>
                 </el-form-item>
