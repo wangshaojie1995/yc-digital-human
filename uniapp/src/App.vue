@@ -52,4 +52,5 @@ onLaunch(async () => {
 </script>
 <style lang="scss">
 //
+	@import '@/static/yy.scss';
 </style>

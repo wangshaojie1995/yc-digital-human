@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class='y-page'>
 		<view class='p-20'>
 			<view class='bg-grey round-10 p-15 flex flex-y-center grid-gap-10' @click='toVioce'>
 				<text class='iconfont icon-jingminglaba fs-25' style="color:var(--purple);"></text>
@@ -146,7 +146,6 @@
 <style lang='scss'>
 	@import '@/digitalhuman/static/iconfont.css';
 
-	@import '@/digitalhuman/static/yy.scss';
 
 	page {
 		background-color: #000;

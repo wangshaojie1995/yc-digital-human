@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class='y-page'>
 		<view class=" bg-blue py-30 px-20 flex flex-y-center flex-x-space-between">
 			<view class="flex flex-column grid-gap-10 text-white">
 				<text class='fs-15'>我的算力</text>
@@ -120,8 +120,6 @@
 
 <style lang='scss'>
 	@import '@/digitalhuman/static/iconfont.css';
-	@import '@/digitalhuman/static/yy.scss';
-
 	.box-shadow {
 		box-shadow: 0rpx 8rpx 12rpx 0rpx rgba(8, 75, 123, 0.05);
 	}

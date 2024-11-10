@@ -309,5 +309,4 @@
 <style lang="scss" scoped>
 	@import '@/digitalhuman/static/iconfont.css';
 
-	@import '@/digitalhuman/static/yy.scss';
 </style>
