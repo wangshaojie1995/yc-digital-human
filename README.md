@@ -1,3 +1,7 @@
+![xhadmin](https://yc-digital-human-1251511393.cos.ap-guangzhou.myqcloud.com/%E5%BC%80%E6%BA%90%E6%95%B0%E5%AD%97%E4%BA%BA2.png)
+
+### ☘ 目标
+
 基于`yc-digital-human`快速创建属于你自己的`数字人`系统
 
 ### 🌈项目前言
@@ -14,6 +18,13 @@
 
 来吧，丢掉一切技术包袱，开始搭建部署这套数字人系统，好好思考上面这段话以及你的身份。
 
+### 🌈后端展示
+
+![xhadmin](https://yc-digital-human-1251511393.cos.ap-guangzhou.myqcloud.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20241110123632.png)
+
+![xhadmin](https://yc-digital-human-1251511393.cos.ap-guangzhou.myqcloud.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20241110123521.png)
+
+![xhadmin](https://yc-digital-human-1251511393.cos.ap-guangzhou.myqcloud.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20241110123458.png)
 
 ### ☘ 已有功能
 
