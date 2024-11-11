@@ -146,10 +146,9 @@ CREATE TABLE `la_dh_voice_text`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
-SET FOREIGN_KEY_CHECKS = 1;
 
 
-
+ALTER TABLE `la_user` ADD COLUMN `points` int NULL DEFAULT 0 AFTER `total_recharge_amount`;
 
 INSERT INTO `la_system_menu` VALUES (179, 28, 'C', '创作配置', 'el-icon-Ship', 0, 'setting.digitalhuman.create/getConfig', 'create', 'setting/digitalhuman/create', '', '', 1, 1, 0, 1730344135, 1730789390);
 INSERT INTO `la_system_menu` VALUES (184, 119, 'A', '点数调整', '', 0, 'user.user/adjustPoints', '', '', '', '', 1, 1, 0, 1730450572, 1730450572);
@@ -186,3 +185,4 @@ INSERT INTO `la_system_menu` VALUES (222, 213, 'C', '订单管理', 'el-icon-Goo
 INSERT INTO `la_system_menu` VALUES (223, 222, 'A', '添加', '', 1, 'digitalhuman.dh_order/add', '', '', '', '', 0, 1, 0, 1730962719, 1730962719);
 INSERT INTO `la_system_menu` VALUES (224, 222, 'A', '编辑', '', 1, 'digitalhuman.dh_order/edit', '', '', '', '', 0, 1, 0, 1730962719, 1730962719);
 INSERT INTO `la_system_menu` VALUES (225, 222, 'A', '删除', '', 1, 'digitalhuman.dh_order/delete', '', '', '', '', 0, 1, 0, 1730962719, 1730962719);
+SET FOREIGN_KEY_CHECKS = 1;
