@@ -41,23 +41,28 @@
 			</view>
 		</view>
 
-		<view class='border-white p-8 mt-30 round-10 flex flex-y-center' @click='upload' style='border-style: dashed;'>
+		<!-- #ifdef MP-WEIXIN -->
+		<view class='border-white p-8 mt-30 round-10 flex flex-y-center' style='border-style: dashed;'  @click='chooseMessageFile'>
 			<view class='bg-grey-3 w-60 h-60 round-8 flex flex-center'>
 				<text class='iconfont icon-shangchuanwenjian text-white fs-25'></text>
 			</view>
-			<!-- #ifdef MP-WEIXIN -->
-			<view class="flex flex-column grid-gap-8 ml-8" @click='chooseMessageFile'>
+			<view class="flex flex-column grid-gap-8 ml-8">
 				<text class='fw-600 text-white fs-16'>从微信中选择</text>
 				<text class='fs-12 text-grey-1'>格式要求:mp3 m4a wav</text>
 			</view>
-			<!-- #endif -->
-			<!-- #ifdef H5 -->
-			<view class="flex flex-column grid-gap-8 ml-8" @click='chooseFile'>
+		</view>
+		<!-- #endif -->
+		<!-- #ifdef H5 -->
+		<view class='border-white p-8 mt-30 round-10 flex flex-y-center' style='border-style: dashed;' @click='chooseFile'>
+			<view class='bg-grey-3 w-60 h-60 round-8 flex flex-center'>
+				<text class='iconfont icon-shangchuanwenjian text-white fs-25'></text>
+			</view>
+			<view class="flex flex-column grid-gap-8 ml-8" >
 				<text class='fw-600 text-white fs-16'>从文件中选择</text>
 				<text class='fs-12 text-grey-1'>格式要求:mp3 m4a wav</text>
 			</view>
-			<!-- #endif -->
 		</view>
+		<!-- #endif -->
 
 	</view>
 </template>
@@ -211,8 +216,7 @@
 		checkUserMedia()
 		// #endif
 		innerAudioContext.onCanplay(() => {
-			alert(innerAudioContext.duration)
-			if ( innerAudioContext.duration != Infinity) {
+			if (innerAudioContext.duration != Infinity) {
 				duration.value = Math.ceil(innerAudioContext.duration)
 			}
 		})
@@ -308,5 +312,4 @@
 
 <style lang="scss" scoped>
 	@import '@/digitalhuman/static/iconfont.css';
-
 </style>

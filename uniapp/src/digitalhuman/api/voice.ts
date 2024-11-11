@@ -4,7 +4,9 @@ import request from '@/utils/request'
 export function getVoiceTextList() {
 	return request.get({ url: '/digitalhuman.VoiceText/lists' },{isAuth:true})
 }
-
+export function getTraintext() {
+	return request.get({ url: '/digitalhuman.Voice/getTraintext' },{isAuth:true})
+}
 
 //上传音频
 export function uploadVoice(options ?: any, token ?: any) {

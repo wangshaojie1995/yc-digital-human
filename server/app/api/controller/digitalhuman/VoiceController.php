@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | 贵州猿创科技 [致力于通过产品和服务，帮助创业者高效化开拓市场]
+// +----------------------------------------------------------------------
+// | Copyright(c)2019~2024 https://xhadmin.cn All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed 这不是一个自由软件，不允许对程序代码以任何形式任何目的的再发行
+// +----------------------------------------------------------------------
+// | Author:贵州猿创科技<416716328@qq.com>|<Tel:18786709420>
+// +----------------------------------------------------------------------
 namespace app\api\controller\digitalhuman;
 
 use app\api\controller\BaseApiController;
@@ -22,7 +30,8 @@ class VoiceController extends BaseApiController
     {
         $data = (new VoiceValidate())->post()->goCheck();
         try {
-            VoiceLogic::create($data['name'], $data['local_voice_url'], $this->userId, $data['duration']);
+            $data['uid'] = $this->userId;
+            VoiceLogic::create($data);
             return $this->success('添加成功');
         } catch (\Throwable $e) {
             return $this->fail('添加失败' . $e->getMessage());
@@ -51,6 +60,13 @@ class VoiceController extends BaseApiController
             return $this->success('删除成功');
         }
         return $this->fail('删除失败');
+    }
+
+
+    public function getTraintext()
+    {
+        $result = VoiceLogic::getTraintext();
+        return $this->data($result);
     }
 
 

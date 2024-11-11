@@ -18,18 +18,20 @@ use app\common\service\ConfigService;
 class CreateLogic extends BaseLogic
 {
 
-    
+
     public static function getConfig(): array
     {
         return [
-            'type' => ConfigService::get('create', 'type'),
-            'voice_type' => ConfigService::get('create', 'voice_type'),
-            'create_points' => ConfigService::get('create', 'create_points'),
-            'voice_points' => ConfigService::get('create', 'voice_points'),
-            'scene_points' => ConfigService::get('create', 'scene_points'),
-            'token' => ConfigService::get('yiding', 'token'),
-            'app_secret' => ConfigService::get('guiji', 'app_secret'),
-            'appid' => ConfigService::get('guiji', 'appid'),
+            'type' => ConfigService::get('create', 'type', 'yiding'),
+            'voice_type' => ConfigService::get('create', 'voice_type', 'yiding'),
+            'create_points' => ConfigService::get('create', 'create_points', 0),
+            'voice_points' => ConfigService::get('create', 'voice_points', 0),
+            'scene_points' => ConfigService::get('create', 'scene_points', 0),
+            'token' => ConfigService::get('yiding', 'token', ''),
+            'app_secret' => ConfigService::get('guiji', 'app_secret', ''),
+            'appid' => ConfigService::get('guiji', 'appid', ''),
+            'channel' => ConfigService::get('create', 'channel', 1),
+            'video_number' => ConfigService::get('create', 'video_number', 1),
         ];
     }
 
@@ -43,7 +45,7 @@ class CreateLogic extends BaseLogic
         ConfigService::set('create', 'create_points', $params['create_points']);
         ConfigService::set('create', 'voice_points', $params['voice_points']);
         ConfigService::set('create', 'scene_points', $params['scene_points']);
+        ConfigService::set('create', 'channel', $params['channel']);
+        ConfigService::set('create', 'video_number', $params['video_number']);
     }
-
-
-  }
+}

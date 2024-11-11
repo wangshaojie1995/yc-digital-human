@@ -14,13 +14,9 @@ namespace app\api\logic\digitalhuman;
 use app\common\logic\BaseLogic;
 use app\common\model\digitalhuman\DhScene;
 use app\common\service\ConfigService;
-use think\facade\Db;
 use app\api\logic\UserLogic;
 use app\api\service\digitalhuman\GuiJiService;
 use app\api\service\digitalhuman\YiDingSevice;
-use app\common\enum\user\AccountLogEnum;
-use app\common\logic\AccountLogLogic;
-use app\common\model\user\User;
 use app\common\service\FileService;
 
 class SceneLogic extends BaseLogic
@@ -28,52 +24,43 @@ class SceneLogic extends BaseLogic
 
     public static function create($name, $local_video_url, $uid)
     {
-        $scene_points = ConfigService::get('create', 'scene_points');
+        $createInfo = ConfigService::get('create');
+        $scene_points = $createInfo['scene_points'] ?? 0;
+        $type = $createInfo['type'];
+        $channel =  $createInfo['channel'] ?? 1;
         if ($scene_points > 0) {
             $user = UserLogic::info($uid);
             if ($user['points'] < $scene_points) {
-                throw new \Exception('积分不足');
+                throw new \Exception('算力点不足');
             }
         }
-        $type = ConfigService::get('create', 'type');
-        Db::startTrans();
-        try {
-            $vr = FileService::getFileUrl($local_video_url);
-            switch ($type) {
-                case "yiding":
-                    $servie = new YiDingSevice();
-                    $task_id = $servie->createScene($name, $vr);
-                    break;
-                case "guiji":
-                    $service = new GuiJiService();
-                    $task_id =  $service->training($name, $vr);
-                    break;
-            }
-            $data = [
-                'name' => $name,
-                'uid' => $uid,
-                'type' => $type,
-                'local_video_url' => $local_video_url,
-                'task_id' => $task_id ?? '',
-                'create_time' => time(),
-                'update_time' => time(),
-            ];
-            User::where('id', $uid)->dec('points', $scene_points)->update();
-            AccountLogLogic::add(
-                $uid,
-                AccountLogEnum::PM_DEC_SCENE_CREATE,
-                AccountLogEnum::DEC,
-                $scene_points,
-                '',
-                '场景复刻',
-                []
-            );
-            DhScene::create($data);
-            Db::commit();
-            return true;
-        } catch (\Throwable $e) {
-            Db::rollback();
-            throw new \Exception('复刻失败：' . $e->getMessage().$e->getLine().$e->getFile());
+
+        $vr = FileService::getFileUrl($local_video_url);
+        switch ($type) {
+            case "yiding":
+                $servie = new YiDingSevice();
+                $task_id = $servie->createScene($name, $vr, $channel);
+                break;
+            case "guiji":
+                $service = new GuiJiService();
+                $task_id =  $service->training($name, $vr);
+                break;
+            default:
+                throw new \Exception('系统未配置渠道');
+                break;
+        }
+        $data = [
+            'name' => $name,
+            'uid' => $uid,
+            'type' => $type,
+            'channel' => $channel,
+            'local_video_url' => $local_video_url,
+            'task_id' => $task_id ?? '',
+            'create_time' => time(),
+            'update_time' => time(),
+        ];
+        if (!DhScene::create($data)) {
+            throw new \Exception('创建数据失败');
         }
     }
 

@@ -39,9 +39,15 @@
 			</view>
 
 			<view class="p-20 text-white text-center fw-600 ls-2">
-				<view class='bg-purple-1 round-30 py-15' v-if='form.name==""||form.local_video_url==""'>提交</view>
-				<view class='bg-purple round-30 py-15' v-else @click='submit'>提交</view>
+				<view 
+					:class="['round-30 py-15', form.name && form.local_video_url ? 'bg-purple' : 'bg-purple-1']" 
+					@click="form.name && form.local_video_url ? submit : null">
+					消耗{{ config?.scene_points }}算力点创建
+				</view>
 			</view>
+
+			
+			
 			<yPopup type='scene'></yPopup>
 		</view>
 	</view>
@@ -50,12 +56,24 @@
 <script setup lang='ts'>
 	import yPopup from '@/digitalhuman/components/y-popup/y-popup'
 	import { uploadVideo, createScene } from '@/digitalhuman/api/scene'
+	import { getConfig } from '@/digitalhuman/api/index'
 	import { ref } from 'vue'
+	import { onLoad } from '@dcloudio/uni-app'
 	const tempUrl = ref('')
 	const form = ref({
 		name: '',
 		local_video_url: '',
 	})
+	const config = ref()
+	
+	onLoad(() => {
+		getConfigInfo()
+	})
+	const getConfigInfo = () => {
+		getConfig().then((res : any) => {
+			config.value = res
+		})
+	}
 	const submit = () => {
 		uni.showLoading({
 			title: "提交中..."

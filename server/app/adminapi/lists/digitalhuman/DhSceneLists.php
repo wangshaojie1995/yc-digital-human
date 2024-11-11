@@ -56,7 +56,7 @@ class DhSceneLists extends BaseAdminDataLists implements ListsSearchInterface
     {
         return DhScene::where($this->searchWhere)
             ->with(['user'])
-            ->field(['id', 'name', 'cover_image', 'local_video_url', 'scene_id', 'uid', 'api_video_url', 'type', 'task_id', 'status', 'massage'])
+            ->field(['id', 'name', 'cover_image', 'local_video_url', 'scene_id', 'channel','uid', 'api_video_url', 'type', 'task_id', 'status', 'massage'])
             ->limit($this->limitOffset, $this->limitLength)
             ->order(['id' => 'desc'])
             ->select()

@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <el-form ref="formRef" :rules="rules" class="ls-form" :model="formData" label-width="160px" scroll-to-error>
+        <el-form ref="formRef" :rules="rules" class="ls-form" :model="formData" label-width="200px" scroll-to-error>
 
             <el-card shadow="never" class="!border-none ">
                 <div class="text-xl font-medium mb-[20px]">创作配置</div>
@@ -15,6 +15,11 @@
                             <el-radio value="shanjian" disabled>闪剪</el-radio>
                             <el-radio value="feitian" disabled>飞天</el-radio>
                         </el-radio-group>
+                        <div v-if="formData.type == 'yiding'">
+                            <a style="color: red; font-size: 12px;"
+                                href="https://api.yidevs.com/?icode=nxNKa7bQ7pj6%2F3rDfdYvjW5lbjFKczVublRnSDgxS1ljSHVXbUE9PQ%3D%3D"
+                                target="_blank">点击申请壹定开放平台</a>
+                        </div>
                     </div>
                 </el-form-item>
 
@@ -27,6 +32,7 @@
                             <el-radio :value="2">付费</el-radio>
                             <el-radio :value="3">PRO</el-radio>
                         </el-radio-group>
+                        <div style="color: red; font-size: 12px;">PRO接口无法与其他接口共享场景，需单独创建PRO场景</div>
                     </div>
                 </el-form-item>
 
@@ -35,6 +41,13 @@
                         <el-radio-group v-model="formData.voice_type">
                             <el-radio value="yiding">壹定</el-radio>
                         </el-radio-group>
+                    </div>
+                </el-form-item>
+
+                <el-form-item label="用户可同时生成视频数量" prop="video_number">
+                    <div class="w-80">
+                        <el-input-number :controls="false" v-model.trim="formData.video_number" placeholder="请输入"
+                            show-word-limit />
                     </div>
                 </el-form-item>
 
@@ -53,7 +66,7 @@
                     </div>
                 </el-form-item>
 
-                <el-form-item label="视频创作扣除点数" prop="create_points">
+                <el-form-item label="视频创作扣除点数(每秒)" prop="create_points">
                     <div class="w-80">
                         <el-input-number :controls="false" v-model.trim="formData.create_points" placeholder="请输入"
                             show-word-limit />
@@ -104,8 +117,9 @@ const formData = ref({
     voice_type: 'yiding',
     type: 'yiding',
     scene_points: 0,
-    video_points: 0,
+    create_points: 0,
     voice_points: 0,
+    video_number: 0,
     appid: '',
     app_secret: '',
 })

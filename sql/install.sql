@@ -15,10 +15,10 @@
 */
 
 SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0; 
+SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for yc_dh_cdkey
+-- Table structure for la_dh_cdkey
 -- ----------------------------
 DROP TABLE IF EXISTS `la_dh_cdkey`;
 CREATE TABLE `la_dh_cdkey`  (
@@ -30,10 +30,10 @@ CREATE TABLE `la_dh_cdkey`  (
   `create_time` int NULL DEFAULT NULL,
   `update_time` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '卡密' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '卡密' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Table structure for yc_dh_order
+-- Table structure for la_dh_order
 -- ----------------------------
 DROP TABLE IF EXISTS `la_dh_order`;
 CREATE TABLE `la_dh_order`  (
@@ -49,10 +49,10 @@ CREATE TABLE `la_dh_order`  (
   `create_time` int NULL DEFAULT NULL,
   `update_time` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for yc_dh_package
+-- Table structure for la_dh_package
 -- ----------------------------
 DROP TABLE IF EXISTS `la_dh_package`;
 CREATE TABLE `la_dh_package`  (
@@ -65,10 +65,10 @@ CREATE TABLE `la_dh_package`  (
   `create_time` int NULL DEFAULT NULL,
   `update_time` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '套餐' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '套餐' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for yc_dh_scene
+-- Table structure for la_dh_scene
 -- ----------------------------
 DROP TABLE IF EXISTS `la_dh_scene`;
 CREATE TABLE `la_dh_scene`  (
@@ -80,6 +80,7 @@ CREATE TABLE `la_dh_scene`  (
   `scene_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `task_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `uid` int NULL DEFAULT 0,
+  `channel` int NULL DEFAULT 1,
   `type` char(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'yiding',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '1',
   `massage` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
@@ -87,10 +88,10 @@ CREATE TABLE `la_dh_scene`  (
   `create_time` int NULL DEFAULT NULL,
   `update_time` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '场景' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '场景' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for yc_dh_video
+-- Table structure for la_dh_video
 -- ----------------------------
 DROP TABLE IF EXISTS `la_dh_video`;
 CREATE TABLE `la_dh_video`  (
@@ -110,13 +111,15 @@ CREATE TABLE `la_dh_video`  (
   `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `line_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `duration` decimal(10, 2) NULL DEFAULT NULL,
+  `channel` int NULL DEFAULT 1,
+  `points` int NULL DEFAULT 0,
   `create_time` int NULL DEFAULT NULL,
   `update_time` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for yc_dh_voice
+-- Table structure for la_dh_voice
 -- ----------------------------
 DROP TABLE IF EXISTS `la_dh_voice`;
 CREATE TABLE `la_dh_voice`  (
@@ -127,13 +130,16 @@ CREATE TABLE `la_dh_voice`  (
   `duration` int NULL DEFAULT 0,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `voice_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `status` int NULL DEFAULT 1,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'yiding',
   `create_time` int NULL DEFAULT NULL,
   `update_time` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '声音' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '声音' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for yc_dh_voice_text
+-- Table structure for la_dh_voice_text
 -- ----------------------------
 DROP TABLE IF EXISTS `la_dh_voice_text`;
 CREATE TABLE `la_dh_voice_text`  (
@@ -144,7 +150,7 @@ CREATE TABLE `la_dh_voice_text`  (
   `create_time` int NULL DEFAULT NULL,
   `update_time` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 
 ALTER TABLE `la_user` ADD COLUMN `points` int NULL DEFAULT 0 AFTER `total_recharge_amount`;

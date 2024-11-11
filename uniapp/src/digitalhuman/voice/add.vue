@@ -16,28 +16,34 @@
 							切换文本
 						</view>
 					</view>
-					<text class='fs-11 text-grey-4 ls-2'>
+					<text class='fs-11 text-grey-4 ls-2' v-if='form.voice_type==1'>
 						{{selectItem?.content}}
 					</text>
+					<text class='fs-11 text-grey-4 ls-2' v-if='form.voice_type==2'>
+						{{selectItem?.segText}}
+					</text>
+				</view>
+				<view class='p-30'>
+					<yRecorder @success="recorderSuccess"></yRecorder>
 				</view>
 			</view>
-		<!-- 	<view class='bg-grey mt-7 p-10 round-8'>
+			<!-- <view class='bg-grey mt-7 p-10 round-8'>
 				<view class="p-30 flex flex-x-space-between fs-19 fw-600 text-grey-1"
 					v-if='config.voice_type=="yiding"'>
-					<text :class='form.voice_type==1?"text-white":""' @click='form.voice_type=1'>普通声音</text>
-					<text :class='form.voice_type==2?"text-white":""' @click='form.voice_type=2'>专业声音</text>
+					<text :class='form.voice_type==1?"text-white":""' @click='form.voice_type=1;getText()'>普通声音</text>
+					<text :class='form.voice_type==2?"text-white":""' @click='form.voice_type=2;getText()'>专业声音</text>
 				</view>
 				<view v-if='form.voice_type==2'>
 					<view>
 						<text>性别:</text>
 						<view class="mt-10">
-							<yRadio :list='sexList'></yRadio>
+							<yRadio :list='sexList' @change='changeSex'></yRadio>
 						</view>
 					</view>
 					<view class="mt-20">
-						<text>年龄:</text>
+						<text>音色:</text>
 						<view class="mt-10">
-							<yRadio :list='ageGroupList'></yRadio>
+							<yRadio :list='ageGroupList' @change='changeageGroup'></yRadio>
 						</view>
 					</view>
 				</view>
@@ -45,21 +51,21 @@
 					<yRecorder @success="recorderSuccess"></yRecorder>
 				</view>
 			</view> -->
-<view class='p-30'>
-					<yRecorder @success="recorderSuccess"></yRecorder>
-				</view>
 
 			<view class="p-20 text-white text-center fw-600 ls-2">
-				<view class='bg-purple-1 round-30 py-15   ' v-if='form.name==""||recorder.url==""'>提交</view>
-				<view class='bg-purple round-30 py-15   ' v-else @click='submit'>提交</view>
+				<view :class="['round-30 py-15', form.name === '' || recorder.url === '' ? 'bg-purple-1' : 'bg-purple']"
+					@click="form.name && recorder.url ? submit() : null">
+					消耗{{ config?.voice_points }}算力点创建
+				</view>
 			</view>
 
-			<u-popup ref='popup' borderRadius='20' mode="bottom">
-				<view class="p-20 text-black" style="max-height: 50vh;">
+
+			<u-popup ref='popup' borderRadius='20' mode="bottom" :safe-area-inset-bottom='true'>
+				<view class="p-20 text-black  box-sizing " style="max-height: 50vh;">
 					<view class=' fw-600 text-center'>
 						<text>选择朗读文本</text>
 					</view>
-					<view class='flex flex-column mt-7 grid-gap-6 overflow-y-scroll'>
+					<view class='flex flex-column mt-7 grid-gap-6 overflow-y-scroll ' v-if='form.voice_type==1'>
 						<view class="round-10 p-15 bg-grey-2 flex flex-column grid-gap-4"
 							v-for="(item,index) in textList" :key='index' @click="select(item)"
 							:class='selectItem.id==item.id?"border-purple":"border-grey-2"'>
@@ -67,8 +73,17 @@
 							<text class='ls-2 fs-12'>{{item.content}}</text>
 						</view>
 					</view>
+					<view class='flex flex-column mt-7 grid-gap-6 overflow-y-scroll ' v-if='form.voice_type==2'>
+						<view class="round-10 p-15 bg-grey-2 flex flex-column grid-gap-4"
+							v-for="(item,index) in textList" :key='index' @click="select(item)"
+							:class='selectItem.segId==item.segId?"border-purple":"border-grey-2"'>
+							<text class='ls-2 fs-12'>{{item.segText}}</text>
+						</view>
+					</view>
 				</view>
 			</u-popup>
+
+
 			<yPopup></yPopup>
 		</view>
 	</view>
@@ -78,7 +93,7 @@
 	import yRecorder from '@/digitalhuman/components/recorder/recorder'
 	import yRadio from '@/digitalhuman/components/y-radio/y-radio'
 	import yPopup from '@/digitalhuman/components/y-popup/y-popup'
-	import { getVoiceTextList, createVoice, uploadVoice } from '@/digitalhuman/api/voice'
+	import { getVoiceTextList, createVoice, uploadVoice, getTraintext } from '@/digitalhuman/api/voice'
 	import { getConfig } from '@/digitalhuman/api/index'
 	import { onLoad } from '@dcloudio/uni-app'
 	import { ref, reactive } from 'vue'
@@ -87,40 +102,64 @@
 	const popup = ref()
 	const selectItem = ref()
 
-	const sexList = reactive([
-		{ name: '男', id: 1 },
-		{ name: '女', id: 2 }
-	])
-	const ageGroupList = reactive([
-		{ name: '儿童', id: 1 },
-		{ name: '青年', id: 2 },
-		{ name: '中年', id: 3 },
-		{ name: '中老年', id: 4 },
-	])
+	// const sexList = reactive([
+	// 	{ name: '男', id: 1 },
+	// 	{ name: '女', id: 2 }
+	// ])
+	// const ageGroupList = reactive([
+	// 	{ name: '儿童', id: 1 },
+	// 	{ name: '青年', id: 2 },
+	// 	{ name: '中年', id: 3 },
+	// 	{ name: '中老年', id: 4 },
+	// ])
 	const recorder = ref({
 		file: '',
 		duration: 0,
 		currentTime: 0,
 		url: ''
 	});
-	const yidingVoice = ref({
-		sex: 1,
-		ageGroup: 1
-	})
+	// const yidingVoice = ref({
+	// 	sex: 1,
+	// 	ageGroup: 1
+	// })
 	const form = ref({
 		name: '',
 		local_voice_url: '',
 		duration: 0,
-		voice_type: 1
+		voice_type: 1,
+		textId: '',
 	})
 	const userStore = useUserStore()
-	const config = ref({
-		voice_type: ''
-	})
+	const config = ref()
 	onLoad(() => {
-		getTextList()
+		getText()
 		getConfigInfo()
 	})
+
+	// const changeageGroup = (e : any) => {
+	// 	yidingVoice.value.sex = e.id
+
+	// }
+	// const changeSex = (e : any) => {
+	// 	yidingVoice.value.ageGroup = e.id
+	// }
+	const getText = () => {
+		textList.value = []
+		if (form.value.voice_type == 1) {
+			getTextList()
+		} else {
+			traintext()
+		}
+	}
+
+	const traintext = () => {
+		getTraintext().then(res => {
+			form.value.textId = res.textId
+			textList.value = res.textSegs
+			selectItem.value = textList.value[0]
+		})
+	}
+
 
 	const getConfigInfo = () => {
 		getConfig().then((res : any) => {
@@ -173,7 +212,7 @@
 		uni.showLoading({
 			title: '创建中...'
 		})
-		createVoice(form.value).then((res : any) => {
+		createVoice({ ...form.value }).then((res : any) => {
 			uni.showToast({
 				title: '添加成功',
 				icon: 'none'

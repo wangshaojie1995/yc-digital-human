@@ -45,6 +45,12 @@
                             <el-tag v-else type="danger">生成失败</el-tag>
                         </template>
                     </el-table-column>
+                    <el-table-column label="渠道" prop="channel">
+                        <template #default="{ row }">
+                            <el-tag v-if="row.channel == 3">PRO</el-tag>
+                            <el-tag v-else type="success">普通</el-tag>
+                        </template>
+                    </el-table-column>
                     <el-table-column label="错误消息" prop="massage" show-overflow-tooltip />
                     <el-table-column label="操作" width="120" fixed="right">
                         <template #default="{ row }">

@@ -28,7 +28,7 @@ class YiDingSevice
 
     /**
      * 获取公共声音
-     * @author:1950781041@qq.com 
+     * @author:1950781041@qq.com
      * @Date:2024-10-30
      */
     public function getVoiceList()
@@ -47,7 +47,7 @@ class YiDingSevice
 
     /**
      * 克隆声音
-     * @author:1950781041@qq.com 
+     * @author:1950781041@qq.com
      * @Date:2024-10-31
      */
     public function cloneVoice($name, $audio_url)
@@ -75,29 +75,59 @@ class YiDingSevice
 
 
     /**
-     * 场景
-     * @author:1950781041@qq.com 
-     * @Date:2024-10-31
+     * 专业声音-创建训练任务
+     * @author:1950781041@qq.com
+     * @Date:2024-11-11
      */
-    public function createScene($name, $video_url)
+    public function professionalCreatedTask($sex = '', $ageGroup = '')
     {
-        $url = "https://api.yidevs.com/app/human/human/Scene/created";
+        $url = "https://api.yidevs.com/app/human/human/Voice/professionalCreatedTask";
         $cilent = new Client();
         $response = $cilent->request('POST', $url, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->token
             ],
             'json' => [
-                'video_name' => $name,
-                'video_url' => $video_url,
-                'callback_url' => (string)url('digitalhuman.YDNotify/scene', [], false, true)
+                'sex' => $sex,
+                'ageGroup' => $ageGroup
             ]
         ]);
         $result = json_decode($response->getBody()->getContents(), true);
         if ($result['code'] == 200) {
-            return $result['data']['scene_task_id'];
+            return $result['data'];
         } else {
-            Log::info('创建场景失败：' . json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+            Log::info('创建训练任务失败' . json_encode($result));
+            throw new \Exception($result['msg']);
+        }
+    }
+
+    /**
+     * 克隆声音
+     * @author:1950781041@qq.com
+     * @Date:2024-11-11
+     */
+    public function professionalClone($name, $task_id, $audio_url, $text_id, $text_seg_id)
+    {
+        $url = "https://api.yidevs.com/app/human/human/Voice/professionalClone";
+        $cilent = new Client();
+        $response = $cilent->request('POST', $url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->token
+            ],
+            'json' => [
+                'name' => $name,
+                'task_id' => $task_id,
+                'audio_url' => $audio_url,
+                'text_id' => $text_id,
+                'text_seg_id' => $text_seg_id,
+                'callbackUrl' => (string)url('digitalhuman.YDNotify/professionalClone', [], false, true)
+            ]
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        if ($result['code'] == 200) {
+            return $result['data'];
+        } else {
+            Log::info('克隆声音失败：' . json_encode($result));
             throw new \Exception($result['msg']);
         }
     }
@@ -105,7 +135,7 @@ class YiDingSevice
 
     /**
      * 合成声音
-     * @author:1950781041@qq.com 
+     * @author:1950781041@qq.com
      * @Date:2024-10-30
      */
     public function synthesisVoice($text, $voice_id)
@@ -132,13 +162,57 @@ class YiDingSevice
 
 
     /**
+     * 场景克隆
+     * @author:1950781041@qq.com
+     * @Date:2024-10-31
+     */
+    public function createScene($name, $video_url, $channel = 1)
+    {
+        $url = match ((int)$channel) {
+            1 => "https://api.yidevs.com/app/human/human/Scene/created",
+            2 => "https://api.yidevs.com/app/human/human/Scene/created",
+            3 => "https://api.yidevs.com/app/human/human/Scene/senior",
+            default => "https://api.yidevs.com/app/human/human/Scene/created",
+        };
+        $cilent = new Client();
+        $response = $cilent->request('POST', $url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->token
+            ],
+            'json' => [
+                'video_name' => $name,
+                'video_url' => $video_url,
+                'callback_url' => (string)url('digitalhuman.YDNotify/scene', [], false, true)
+            ]
+        ]);
+        $result = json_decode($response->getBody()->getContents(), true);
+        if ($result['code'] == 200) {
+            return $result['data']['scene_task_id'];
+        } else {
+            Log::info('创建场景失败：' . json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+            throw new \Exception($result['msg']);
+        }
+    }
+
+
+
+
+
+
+
+    /**
      * 合成视频
-     * @author:1950781041@qq.com 
+     * @author:1950781041@qq.com
      * @Date:2024-11-01
      */
-    public function createVideo($task_id, $voice_url)
+    public function createVideo($task_id, $voice_url, $channel = 1)
     {
-        $url = "https://api.yidevs.com/app/human/human/Index/created";
+        $url = match ((int)$channel) {
+            1 => "https://api.yidevs.com/app/human/human/Index/created",
+            2 => "https://api.yidevs.com/app/human/human/Musetalk/generate",
+            3 => "https://api.yidevs.com/app/human/human/Musetalk/senior",
+            default => "https://api.yidevs.com/app/human/human/Index/created",
+        };
         $cilent = new Client();
         $response = $cilent->request('POST', $url, [
             'headers' => [
@@ -155,7 +229,7 @@ class YiDingSevice
         if ($result['code'] == 200) {
             return $result['data']['video_task_id'];
         } else {
-            Log::info('视频生成失败：' . json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+            Log::info('视频合成失败：' . json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
             throw new \Exception($result['msg']);
         }
     }
@@ -163,7 +237,12 @@ class YiDingSevice
 
 
 
-    public function getText()
+    /**
+     * 获取训练文本-专业声音
+     * @author:1950781041@qq.com
+     * @Date:2024-11-11
+     */
+    public function getTraintext()
     {
         $url = "https://api.yidevs.com/app/human/human/Voice/getTraintext";
         $cilent = new Client();

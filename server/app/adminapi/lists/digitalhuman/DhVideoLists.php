@@ -56,7 +56,7 @@ class DhVideoLists extends BaseAdminDataLists implements ListsSearchInterface
     {
         return DhVideo::where($this->searchWhere)
             ->with('user')
-            ->field(['id', 'task_id', 'uid', 'name', 'text', 'cover_image', 'local_video_url','api_video_url', 'local_voice_url', 'scene_id', 'status', 'message'])
+            ->field(['id', 'task_id', 'uid', 'name', 'text', 'cover_image', 'channel','local_video_url','api_video_url', 'local_voice_url', 'scene_id', 'status', 'message'])
             ->limit($this->limitOffset, $this->limitLength)
             ->order(['id' => 'desc'])
             ->select()
