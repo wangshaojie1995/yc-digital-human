@@ -20,12 +20,8 @@
 						{{selectItem?.content}}
 					</text>
 				</view>
-
-				<view class='p-30'>
-					<yRecorder @success="recorderSuccess"></yRecorder>
-				</view>
 			</view>
-			<!-- <view class='bg-grey mt-7 p-10 round-8'>
+		<!-- 	<view class='bg-grey mt-7 p-10 round-8'>
 				<view class="p-30 flex flex-x-space-between fs-19 fw-600 text-grey-1"
 					v-if='config.voice_type=="yiding"'>
 					<text :class='form.voice_type==1?"text-white":""' @click='form.voice_type=1'>普通声音</text>
@@ -49,6 +45,9 @@
 					<yRecorder @success="recorderSuccess"></yRecorder>
 				</view>
 			</view> -->
+<view class='p-30'>
+					<yRecorder @success="recorderSuccess"></yRecorder>
+				</view>
 
 			<view class="p-20 text-white text-center fw-600 ls-2">
 				<view class='bg-purple-1 round-30 py-15   ' v-if='form.name==""||recorder.url==""'>提交</view>
