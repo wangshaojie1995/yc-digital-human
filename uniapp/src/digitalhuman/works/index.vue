@@ -107,7 +107,7 @@
 			success(res : any) {
 				if (res.confirm) {
 
-					delVideo({ id: selectItem.value.value }).then((res1 : any) => {
+					delVideo({ id: selectItem.value.id }).then((res1 : any) => {
 						popup.value.close()
 						uni.showToast({
 							title: '删除成功'

@@ -189,8 +189,8 @@
 
 	const handleDeleteAction = (type : number) => {
 		const actionMap : Record<number, Function> = {
-			1: delVoice,
-			2: delScene,
+			1: delScene,
+			2: delVoice,
 		};
 
 		actionMap[type]?.({ id: id.value }).then(() => {
@@ -203,6 +203,7 @@
 		uni.showToast({
 			title: message
 		});
+		paging.value.reload()
 	}
 
 
